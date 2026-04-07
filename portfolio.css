@@ -1,0 +1,540 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: "Saira", "Athiti", sans-serif;
+    background-image: url('images/paper4.jpg'); /* */
+    background-repeat: no-repeat;            /* */
+    background-position: center;             /* */
+    background-size: cover;                  /* */
+    background-attachment: fixed;            /* Optional: creates a "parallax" effect */
+    margin: 0;                               /* Remove default body margin */
+    height: 100vh; 
+}
+
+/* Stage 0: Hidden (default) */
+svg line {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Stage 1: Initial - lines visible but small */
+svg.initial line {
+    opacity: 1;
+}
+
+/* Stage 2: Expanded - lines at final positions */
+svg.expanded line {
+    opacity: 1;
+}
+
+/* Title states */
+.title {
+    position: fixed;
+    z-index: 10;
+    font-size: 24px;
+    color: black;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+}
+
+.title.visible {
+    opacity: 1;
+}
+
+/* Side label states */
+.side-label {
+    position: fixed;
+    z-index: 10;
+    font-size: 14px;
+    color: black;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+    text-align: right;
+}
+
+.side-label.visible {
+    opacity: 1;
+}
+
+#secondary-label {
+    font-size: 10px;
+    align-self: flex-start;
+    padding-left: 15px;
+}
+
+/* Content area */
+.content-area {
+    position: fixed;
+    z-index: 6;
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-width: 0;
+    box-sizing: border-box;
+    max-width: 100vw;
+    max-height: 100vh;
+}
+
+.content-area.visible {
+    opacity: 1;
+}
+
+/* Projects route: section is the size container so the grid collapses from 2→1 columns by pane width, not viewport */
+.content-area section {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    container-type: inline-size;
+    container-name: projects;
+}
+
+.main-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
+
+.main-nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    transition: opacity 0.3s;
+}
+
+.main-nav a:hover {
+    opacity: 0.6;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 12px;
+    align-items: flex-start;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Do NOT use width: 100% here — in a row flex it claims the whole card and shoves text off / wraps */
+.carousel-column {
+    flex: 0 1 500px;
+    min-width: 0;
+    max-width: min(500px, 62%);
+}
+
+.project-text {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow-wrap: break-word;
+    padding-top: var(--img-inset-top, 0px);
+    position: relative;
+    z-index: 1;
+}
+
+.project-text a {
+    display: inline-block;
+}
+
+.project-text h3 {
+    margin: 0;
+    line-height: 1.1;
+}
+
+.project-text p {
+    margin: 0.5rem 0 0;
+}
+
+.preview-carousel {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Detail route: single full-width carousel host */
+.detail-carousel {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/*
+ * CSS-first sizing: height follows width via aspect-ratio (matches CarouselSlide 100×60).
+ * max-height caps keep carousels inside the content pane on narrow viewports.
+ */
+.carousel-three-div {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    aspect-ratio: 16 / 12;
+    max-height: min(52vh, 320px);
+    overflow: visible;
+    z-index: 2;
+}
+
+.preview-carousel .carousel-three-div {
+    max-height: min(48vh, 280px);
+}
+
+.detail-carousel .carousel-three-div {
+    max-height: min(72vh, 720px);
+}
+
+.carousel-three-div canvas {
+    display: block;
+}
+
+.carousel-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding: 0 0 0 var(--img-inset-left, 10px);
+    margin-top: calc(-1 * var(--img-inset-bottom, 0px));
+    position: relative;
+    z-index: 3;
+}
+
+.carousel-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px 10px 12px;
+    font-size: 18px;
+    transition: background 0.2s;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+#projects-list {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+@container projects (min-width: 800px) {
+    #projects-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+#projects-list > .project-card {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: visible;
+}
+
+/* Detail route: full-width carousel host; insets come from JS on #seventvote-images */
+.detail-project {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+.content-area::-webkit-scrollbar {
+    display: none;
+}
+
+h6 {
+    font-weight: normal;
+}
+
+.content-area .languages-links-details {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    flex-wrap: wrap;
+    width: auto;
+    
+}
+
+#rafflebot-links {
+    flex-grow: 1;
+}
+
+#rafflebot-languages {
+    flex-grow: 1;
+}
+
+#seventvote {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+}
+
+@media(min-width:600px) {
+    .images-details{    
+    top: -70px;
+}}
+@media(max-width:600px) {
+    .images-details{    
+    top: -30px;
+}}
+
+.content-area .detail-project {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.detail-project::-webkit-scrollbar {
+    display: none;
+}
+
+.detail-summary {
+    flex: 8 1 670px;
+}
+
+.languages-links-details {
+    flex: 1 1 260px;
+}
+
+.detail-languages {
+    width: auto;
+}
+
+.preview-description {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;   
+    line-clamp: 3;          
+}
+
+.preview-languages {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;  
+    line-clamp: 1;   
+    font-size: 12px;
+    color: grey;       
+}
+
+.content-area .about-experience-subtitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.content-area .about-experience-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: auto;
+    min-width: max-content; /* overrides .content-area section { min-width: 0 } */
+    flex-shrink: 0;        /* do not shrink this column; wrap .experience-years instead */
+}
+
+.experience-years, .experience-company{
+    font-weight: normal;
+    padding-top: 2px;
+    white-space: nowrap;
+    min-width: auto;
+
+}
+
+.experience-title {
+    white-space: nowrap;
+}
+
+.experience-years {
+    margin-left: auto;
+    flex-shrink: 0; /* keep the date one piece; when the row is too narrow, this item wraps */
+}
+
+@media(max-width: 465px) {
+    .content-area .about-experience-subtitle {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .experience-years {
+        margin:0px;
+    }
+}
+
+.about-div {
+    padding-bottom: 20px;
+}
+
+
+.social-link-image {
+    max-height: 160px;
+}
+
+#contact-form {
+    max-width: 600px;
+}
+
+.message-fieldset {
+    border: 1px solid gray;   /* border around legend + textarea */
+    border-radius: 4px;
+    padding: 0.75rem 1rem 1rem;
+    margin: 0;
+    min-width: 0;             /* helps inside flex/grid */
+}
+
+.message-fieldset legend {
+    padding: 0 0.35rem;       /* space so text doesn’t touch the border “break” */
+    font-size: 0.9rem;
+}
+
+.message-fieldset textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;             /* optional: only the fieldset border shows */
+    outline: none;
+    resize: vertical;
+    background: none;
+}
+
+.input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;             /* optional: only the fieldset border shows */
+    outline: none;
+    resize: vertical;
+    background: none;
+}
+
+.name-fieldset, .email-fieldset {
+    border: 1px solid gray;   /* border around legend + textarea */
+    border-radius: 4px;
+    padding: .3rem 1rem .3rem;
+    margin: 0;
+    min-width: 0;             /* helps inside flex/grid */
+    max-width: 400px;
+}
+
+.contact-div {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    gap: 3rem;
+    align-items: start;
+    justify-items: center;
+    grid-template-columns: 1fr;
+}
+
+.contact-socials {
+    display: flex;
+    flex-direction: row;
+    gap: 3rem;
+}
+
+#contact-form {
+    width: 100%;
+    max-width: 400px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-or {
+    text-align: center;
+}
+
+@media (min-width: 980px) {
+    .contact-div {
+        grid-template-columns: .8fr 1fr 1fr;
+        align-items: center;
+        justify-items: stretch;
+    }
+
+    .contact-socials {
+        justify-self: center;
+    }
+
+    .contact-or {
+        justify-self: center;
+    }
+
+    #contact-form {
+        justify-self: start;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 980px) {
+    .contact-socials {
+        align-self: center;
+    }
+}
+
+.contact-button {
+    max-width: 100px;
+    height: 40px;
+    background-color: black;
+    color: white;
+    font-family: "Saira", "Athiti", sans-serif;
+    border: black;
+    border-radius: 4px;
+    padding-right: 18px;
+}
+
+button:hover {
+    cursor: pointer; 
+    background:rgba(0, 0, 0, 0.7)
+}
+
+.social-link {
+    padding: 10px 12px 4px 12px;
+    border: 2px solid transparent; /* reserves space */
+    border-radius: 4px;
+    box-sizing: border-box;        /* optional but good */
+}
+  
+.social-link:hover {
+    border-color: black;
+    cursor: pointer;
+    transition: 200ms;
+}
+  
