@@ -822,7 +822,7 @@ function updateContent() {
                         </div>
                         <div class="project-text">
                             <a href="#projects/rafflebot"><h3>RaffleBot</h3></a>
-                            <p class="preview-description" >RaffleBot is a tool, initially intended specifically for a specific streamer's Christmas giveaway event, however it became a tool that 
+                            <p class="preview-description" >RaffleBot is a tool, initially intended for a specific streamer's Christmas giveaway event, however it became a tool that 
                                 can be used by any streamer for similiar events. It changed a task that required a team of 8 working in rotating shifts over 30 hours, into 
                                 a task that only required 1 person for however long the event lasts. It handles event creation, item storage, distribution, and event monitoring, 
                                 allowing for much simpler and effecient giveaway events, both for the streamer/owner, and their community/recipients as well.
@@ -901,7 +901,7 @@ function updateContent() {
 
             <div id="rafflebot-summary" class="detail-summary">
             <h3>Summary</h3>
-            <p>RaffleBot is a tool, initially intended specifically for a specific streamer's Christmas giveaway event, however it became a tool that 
+            <p>RaffleBot is a tool, initially intended for a specific streamer's Christmas giveaway event, however it became a tool that 
             can be used by any streamer for similiar events. It changed a task that required a team of 8 working in rotating shifts over 30 hours, into 
             a task that only required 1 person for however long the event lasts. It handles event creation, item storage, distribution, and event monitoring, 
             allowing for much simpler and effecient giveaway events, both for the streamer/owner, and their community/recipients as well.</p>
