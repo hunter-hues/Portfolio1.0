@@ -838,7 +838,7 @@ function updateContent() {
         const seventtvoteSection = document.getElementById('7tvote-link');
         createCarousel(seventtvoteImages, seventtvoteSection, 'preview');
 
-        const rafflebotImages = ['images/RaffleBot_preview1.png', 'images/RaffleBot_preview2.png'];
+        const rafflebotImages = ['images/RaffleBot_preview1.png', 'images/RaffleBot_preview2.png', 'images/RaffleBot_preview3.png'];
         const rafflebotSection = document.getElementById('rafflebot-link');
         createCarousel(rafflebotImages, rafflebotSection, 'preview');
     } else if (route === 'projects/7tvote'){
