@@ -927,7 +927,7 @@ function updateContent() {
             </section>
         </section>
         `;
-        const seventtvoteImages = ['images/RaffleBot_preview1.png', 'images/RaffleBot_preview2.png'];
+        const seventtvoteImages = ['images/RaffleBot_preview1.png', 'images/RaffleBot_preview2.png', 'images/RaffleBot_preview3.png'];
         const seventtvoteSection = document.getElementById('rafflebot-images');
         createCarousel(seventtvoteImages, seventtvoteSection, 'detail');
 
