@@ -7,7 +7,16 @@ const MIN_MARGIN_X = 30;           // Minimum 30px from sides
 const MIN_MARGIN_Y = 30;           // Minimum 30px from top/bottom
 const TITLE_LEFT_POSITION = 50;
 const CORNER_GAP = 20;  // 20px gap at each corner
-const SIDE_LABEL_RIGHT = 5;
+const SIDE_LABEL_RIGHT_MIN = 5;   // min inset from right on narrow viewports
+const SIDE_LABEL_RIGHT_MAX = 30;   // max inset on very wide screens
+const SIDE_LABEL_RIGHT_VW = 0.011; // fraction of viewport width for scaling
+
+function getSideLabelRightPx() {
+    const w = window.innerWidth;
+    return Math.round(
+        Math.min(SIDE_LABEL_RIGHT_MAX, Math.max(SIDE_LABEL_RIGHT_MIN, w * SIDE_LABEL_RIGHT_VW))
+    );
+}
 
 // Timing delays for animation sequence
 const FADE_IN_DELAY = 500;         // When box fades in
@@ -145,7 +154,7 @@ function setFinalPosition() {
     
     
     sideLabel.style.top = `${sideLabelTop}px`;
-    sideLabel.style.right = `${SIDE_LABEL_RIGHT}px`;
+    sideLabel.style.right = `${getSideLabelRightPx()}px`;
     
     // Get updated side label position
     const sideLabelRectUpdated = sideLabel.getBoundingClientRect();
@@ -264,7 +273,7 @@ function animateToFinalPosition() {
 
     sideLabel.style.top = `${sideLabelTop}px`;
     sideLabel.style.left = '';
-    sideLabel.style.right = `${SIDE_LABEL_RIGHT}px`;
+    sideLabel.style.right = `${getSideLabelRightPx()}px`;
     
     // Get updated side label position
     const sideLabelRectUpdated = sideLabel.getBoundingClientRect();
